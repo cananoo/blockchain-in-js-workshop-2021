@@ -1,6 +1,6 @@
 import sha256 from 'crypto-js/sha256.js'
 
-export const DIFFICULTY = 2
+export const DIFFICULTY = 3
 
 class Block {
   // 1. 完成构造函数及其参数
@@ -15,11 +15,20 @@ class Block {
     this.previousHash = previousHash
     this.height = height
     this.hash = hash
+    this.nonce = ''
   }
 
-  isValid() {}
+  isValid() {
+     if (this.nonce.startsWith('0'.repeat(DIFFICULTY))) {
+       return true
+     }else {
+       return false
+     }
+  }
 
-  setNonce(nonce) {}
+  setNonce(nonce) {
+    this.nonce = nonce
+  }
 
 }
 
