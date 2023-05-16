@@ -19,7 +19,7 @@ class Block {
   }
 
   isValid() {
-     if (this.nonce.startsWith('0'.repeat(DIFFICULTY))) {
+     if (this.hash.startsWith('0'.repeat(DIFFICULTY))) {
        return true
      }else {
        return false
@@ -27,7 +27,7 @@ class Block {
   }
 
   setNonce(nonce) {
-    this.nonce = nonce
+    this.hash = nonce
   }
 
 }
