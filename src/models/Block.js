@@ -19,11 +19,11 @@ class Block {
   }
 
   isValid() {
-     if (this.hash.startsWith('0'.repeat(DIFFICULTY))) {
-       return true
-     }else {
-       return false
-     }
+    if (this.hash.startsWith('0'.repeat(DIFFICULTY))) {
+      return true
+    } else {
+      return false
+    }
   }
 
   setNonce(nonce) {
@@ -31,5 +31,4 @@ class Block {
   }
 
 }
-
 export default Block
