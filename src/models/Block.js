@@ -1,4 +1,5 @@
 import sha256 from 'crypto-js/sha256.js'
+import UTXOPool from "./UTXOPool.js";
 
 export const DIFFICULTY = 2
 
@@ -10,13 +11,14 @@ class Block {
           - 区块高度
           - 区块哈希值
     */
-  constructor(blockchain, previousHash, height, hash) {
+  constructor(blockchain, previousHash, height, hash,cointbaseBeneficiary) {
     this.blockchain = blockchain
     this.previousHash = previousHash
     this.height = height
     this.hash = hash
     this.nonce = ''
-    this.utxoPool = {}
+    this.utxoPool = this.blockchain.utxoPool
+    this.coinbaseBeneficiary = cointbaseBeneficiary
   }
 
   isValid() {
@@ -31,6 +33,11 @@ class Block {
     this.nonce = nonce
     this.hash = sha256(this.nonce+this.previousHash).toString()
   }
+
+    //计算hash函数
+    static calcHash(block) {
+    return sha256(block.nonce + block.previousHash).toString()
+    }
 
 }
 export default Block

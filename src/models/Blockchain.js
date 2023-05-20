@@ -11,6 +11,7 @@ class Blockchain {
     this.name = name
     this.genesis = null
     this.blocks = {}
+    this.utxoPool = new UTXOPool()
   }
   // 2. 定义 longestChain 函数
   /* 
@@ -18,20 +19,8 @@ class Blockchain {
   */
   longestChain() {
     let longestChain = []
-      var temp = 0
-      var HeightestBlock = null
-      for (let block in this.blocks) {
-          if (this.blocks[block].height >= temp) {
-              temp = this.blocks[block].height
-          }
-      }
-    for (let block in this.blocks) {
-        if (this.blocks[block].height === temp) {
-           HeightestBlock = this.blocks[block]
-            longestChain.push(HeightestBlock)
-              break
-        }
-    }
+      var HeightestBlock = this.maxHeightBlock()
+      longestChain.push(HeightestBlock)
     while (this.blocks[HeightestBlock.previousHash]!= null) {
       longestChain.push(this.blocks[HeightestBlock.previousHash])
       HeightestBlock = this.blocks[HeightestBlock.previousHash]
@@ -41,25 +30,51 @@ class Blockchain {
 
   // 判断当前区块链是否包含
   containsBlock(block) {
-    // 添加判断方法
-    return false
+    if (this.blocks[block.hash]) {
+      return true
+    } else {
+      return false
+    }
   }
 
 
 // 获得区块高度最高的区块
  maxHeightBlock() {
-    // return Block
+     var temp = 0
+     var HeightestBlock = null
+     for (let block in this.blocks) {
+         if (this.blocks[block].height >= temp) {
+             temp = this.blocks[block].height
+         }
+     }
+     for (let block in this.blocks) {
+         if (this.blocks[block].height === temp) {
+             HeightestBlock = this.blocks[block]
+             return HeightestBlock
+         }
+     }
   }
 
   // 添加区块
   /*
-
   */
   _addBlock(block) {
     if (!block.isValid()) return
     if (this.containsBlock(block)) return
 
     // 添加 UTXO 快照与更新的相关逻辑
+      for (let blo in this.blocks) {
+          if (this.blocks[blo].height === block.height ) {
+               var Selectblo = this.blocks[blo]
+          }
+      }
+      if (Selectblo) {
+          this.blocks[block.hash] = block
+          return;
+      }else {
+          this.utxoPool.addUTXO(block.coinbaseBeneficiary)
+          this.blocks[block.hash] = block
+      }
   }
 }
 export default Blockchain
