@@ -9,7 +9,7 @@ class UTXOPool {
   /**
    * 将交易的信息更新至 UTXOPool 中
    */
-  addUTXO(miner) {
+  addUTXO(miner,amount) {
     var utxo = new UTXO()
     if (this.utxos[miner]){
       var utxo = this.utxos[miner];
@@ -18,6 +18,17 @@ class UTXOPool {
     this.utxos[miner] = utxo;
   }
 
+
+
+  // 处理交易函数
+  handleTransaction() {}
+
+  // 验证交易合法性
+  /**
+   * 验证余额
+   * 返回 bool
+   */
+  isValidTransaction() {}
   // 将当前 UXTO 的副本克隆
   clone() {
     return new UTXOPool(this.utxos)
