@@ -1,6 +1,6 @@
 export default class UTXO {
 
   constructor() {
-    this.amount = 12.5
+    this.amount = 0
   }
 }

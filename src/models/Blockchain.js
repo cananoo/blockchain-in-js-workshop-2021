@@ -72,7 +72,7 @@ class Blockchain {
           this.blocks[block.hash] = block
           return;
       }else {
-          this.utxoPool.addUTXO(block.coinbaseBeneficiary)
+          this.utxoPool.addUTXO(block.coinbaseBeneficiary,12.5)
           this.blocks[block.hash] = block
       }
   }
