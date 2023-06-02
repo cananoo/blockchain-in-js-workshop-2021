@@ -1,5 +1,6 @@
 import sha256 from 'crypto-js/sha256.js'
 import UTXOPool from "./UTXOPool.js";
+import {validateHash} from "../utils.js";
 
 export const DIFFICULTY = 2
 
@@ -19,6 +20,10 @@ class Block {
     this.nonce = ''
     this.utxoPool = this.blockchain.utxoPool
     this.coinbaseBeneficiary = cointbaseBeneficiary
+    // 存储交易的列表
+    this.transactions = []
+    // 交易的默克尔树根
+    this.transactionsRoot = ''
   }
 
   isValid() {
@@ -43,10 +48,14 @@ class Block {
 
   // 汇总计算交易的 Hash 值
   /**
-   * 默克尔树实现
+   * 根据区块中的所有交易计算的hash值（交易加入会更新hash） 简单实现 并未使用默克尔树
    */
   combinedTransactionsHash() {
-
+    this.transactions.forEach((transaction) => {
+      this.transactionsRoot += transaction.hash
+    })
+    this.transactionsRoot = sha256(this.transactionsRoot).toString()
+    return  this.transactionsRoot
   }
 
   // 添加交易到区块
@@ -54,6 +63,14 @@ class Block {
    *
    * 需包含 UTXOPool 的更新与 hash 的更新
    */
-  addTransaction() {}
+  addTransaction(Transaction) {
+    if (!validateHash(Transaction.hash)){
+        throw new Error('Error: Transaction hash is invalid')
+    }
+    if (this.utxoPool.isValidTransaction(Transaction.miner,Transaction.amount)){
+      this.transactions.push(Transaction)
+      this.combinedTransactionsHash()
+    }
+  }
 }
 export default Block
