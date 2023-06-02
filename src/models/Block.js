@@ -69,6 +69,7 @@ class Block {
     }
     if (this.utxoPool.isValidTransaction(Transaction.miner,Transaction.amount)){
       this.transactions.push(Transaction)
+      this.utxoPool.handleTransaction(Transaction)
       this.combinedTransactionsHash()
     }
   }
