@@ -38,6 +38,22 @@ class Block {
     static calcHash(block) {
     return sha256(block.nonce + block.previousHash).toString()
     }
+// 根据交易变化更新区块 hash
+  _setHash() {}
 
+  // 汇总计算交易的 Hash 值
+  /**
+   * 默克尔树实现
+   */
+  combinedTransactionsHash() {
+
+  }
+
+  // 添加交易到区块
+  /**
+   *
+   * 需包含 UTXOPool 的更新与 hash 的更新
+   */
+  addTransaction() {}
 }
 export default Block
