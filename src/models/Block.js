@@ -51,10 +51,11 @@ class Block {
    * 根据区块中的所有交易计算的hash值（交易加入会更新hash） 简单实现 并未使用默克尔树
    */
   combinedTransactionsHash() {
+    var newtransactionsRoot = ''
     this.transactions.forEach((transaction) => {
-      this.transactionsRoot += transaction.hash
+      newtransactionsRoot += transaction.hash
     })
-    this.transactionsRoot = sha256(this.transactionsRoot).toString()
+    this.transactionsRoot = sha256(newtransactionsRoot).toString()
     return  this.transactionsRoot
   }
 
@@ -67,11 +68,9 @@ class Block {
     if (!validateHash(Transaction.hash)){
         throw new Error('Error: Transaction hash is invalid')
     }
-    if (this.utxoPool.isValidTransaction(Transaction.miner,Transaction.amount)){
       this.transactions.push(Transaction)
-      this.utxoPool.handleTransaction(Transaction)
+      this.utxoPool.handleTransaction(Transaction, this.coinbaseBeneficiary)
       this.combinedTransactionsHash()
-    }
   }
 }
 export default Block

@@ -24,11 +24,26 @@ class UTXOPool {
 
 
   // 处理交易函数
-  handleTransaction(trx) {
-    if (this.isValidTransaction(trx.miner,trx.amount)){
-      this.utxos[trx.miner].amount = this.utxos[trx.miner].amount - trx.amount;
-      this.utxos[trx.receiverspublickey] = new UTXO();
-      this.utxos[trx.receiverspublickey].amount += trx.amount;
+  handleTransaction(trx,coinbaseBeneficiary) {
+    if (this.isValidTransaction(trx)){
+      if (trx.miner == coinbaseBeneficiary){
+        this.utxos[trx.miner].amount = this.utxos[trx.miner].amount - trx.amount;
+        if (this.utxos[trx.receiverspublickey] == null) {
+          this.utxos[trx.receiverspublickey] = new UTXO();
+          this.utxos[trx.receiverspublickey].amount += trx.amount;
+        }else {
+          this.utxos[trx.receiverspublickey].amount += trx.amount;
+        }
+      }else {
+this.utxos[trx.miner].amount = this.utxos[trx.miner].amount - trx.amount - trx.transactionfee;
+        if (this.utxos[trx.receiverspublickey] == null) {
+          this.utxos[trx.receiverspublickey] = new UTXO();
+          this.utxos[trx.receiverspublickey].amount += trx.amount;
+        }else {
+          this.utxos[trx.receiverspublickey].amount += trx.amount;
+        }
+         this.utxos[coinbaseBeneficiary].amount += trx.transactionfee;
+      }
     }
 
   }
@@ -38,10 +53,10 @@ class UTXOPool {
    * 验证余额
    * 返回 bool
    */
-  isValidTransaction(miner,amount) {
-    if (this.utxos[miner]){
-      var utxo = this.utxos[miner];
-      if (utxo.amount >= amount){
+  isValidTransaction(trx) {
+    if (this.utxos[trx.miner]){
+      var utxo = this.utxos[trx.miner];
+      if (utxo.amount >= trx.amount + trx.transactionfee){
         return true;
       }
     }
