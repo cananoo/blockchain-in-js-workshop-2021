@@ -68,9 +68,12 @@ class Block {
     if (!validateHash(Transaction.hash)){
         throw new Error('Error: Transaction hash is invalid')
     }
-      this.transactions.push(Transaction)
+      if (this.utxoPool.isValidTransaction(Transaction)){
+        this.transactions.push(Transaction)
+      }
       this.utxoPool.handleTransaction(Transaction, this.coinbaseBeneficiary)
       this.combinedTransactionsHash()
   }
+
 }
 export default Block

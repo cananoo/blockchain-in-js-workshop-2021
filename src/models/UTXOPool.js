@@ -54,6 +54,9 @@ this.utxos[trx.miner].amount = this.utxos[trx.miner].amount - trx.amount - trx.t
    * 返回 bool
    */
   isValidTransaction(trx) {
+    if (!trx.hasValidSignature()){
+        return false;
+    }
     if (this.utxos[trx.miner]){
       var utxo = this.utxos[trx.miner];
       if (utxo.amount >= trx.amount + trx.transactionfee){
