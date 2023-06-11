@@ -23,6 +23,12 @@ class Transaction {
     return sha256(
       this.miner + this.receiverspublickey + this.amount+this.transactionfee).toString()
   }
+
+  // 校验交易签名 返回 bool 类型的值
+  hasValidSignature() {
+
+  }
+
 }
 
 export default Transaction
