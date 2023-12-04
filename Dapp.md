@@ -450,3 +450,47 @@ contract Mailbox {
     }
 }
 ```
+##  七、ERC20
+
+### ERC20简介
+
+ERC20 是以太坊上最常见的代币标准之一，它定义了一系列标准接口，用于实现代币的基本功能，例如转账、查询余额等。ERC20 代币可以在以太坊上进行交易，也可以用于支付燃气费用。
+
+### ERC20 属性
+
+ERC20 代币具有以下属性(可选项)：
+
+- 名称（name）：代币的名称，例如“以太坊”。
+- 符号（symbol）：代币的符号，例如“ETH”。
+- 小数位数（decimals）：代币的小数位数，例如 18。
+
+
+### ERC20 标准接口
+
+ERC20 标准接口定义了一系列函数，用于实现代币的基本功能，例如转账、查询余额等。ERC20 标准接口的定义如下：
+
+```solidity
+interface IERC20 {
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+```
+### oppenZeppelin简介
+
+OpenZeppelin 是一个开源的以太坊智能合约库，提供了一系列安全的智能合约，可以帮助开发者更轻松地构建、部署和测试智能合约。OpenZeppelin 提供了一系列标准的智能合约，例如 ERC20、ERC721、ERC777 等，可以帮助开发者更轻松地实现代币、非同质化代币、代币众筹等功能。
+
+### safeERC20
+
+safeERC20 是 OpenZeppelin 提供的一个库，用于安全地实现 ERC20 代币的转账功能。它提供了一系列安全的 ERC20 代币转账函数，可以帮助开发者更轻松地实现 ERC20 代币的转账功能。类似于WETH，将ETH转换成ERC20代币。作用是防止合约开发者未按照 ERC20 标准（包括参数与返回值）实现代币的转账功能，从而导致代币无法转账的问题。
+
+
+
+
+
+
