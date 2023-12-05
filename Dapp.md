@@ -490,7 +490,70 @@ OpenZeppelin 是一个开源的以太坊智能合约库，提供了一系列安�
 safeERC20 是 OpenZeppelin 提供的一个库，用于安全地实现 ERC20 代币的转账功能。它提供了一系列安全的 ERC20 代币转账函数，可以帮助开发者更轻松地实现 ERC20 代币的转账功能。类似于WETH，将ETH转换成ERC20代币。作用是防止合约开发者未按照 ERC20 标准（包括参数与返回值）实现代币的转账功能，从而导致代币无法转账的问题。
 
 
+##  八、ERC721
 
+### ERC721简介
 
+ERC721 是以太坊上最常见的非同质化代币标准之一，它定义了一系列标准接口，用于实现非同质化代币的基本功能，例如转账、查询余额等。ERC721 代币可以在以太坊上进行交易，也可以用于支付燃气费用。
 
+### ERC721 接口
 
+ERC721 标准接口定义了一系列函数，用于实现非同质化代币的基本功能，例如转账、查询余额等。ERC721 标准接口的定义如下：
+
+```solidity
+interface IERC721 {
+	event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
+	event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
+	event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
+	function balanceOf(address owner) external view returns (uint256 balance);
+	function ownerOf(uint256 tokenId) external view returns (address owner);
+	function safeTransferFrom(address from, address to, uint256 tokenId) external;
+	function transferFrom(address from, address to, uint256 tokenId) external;
+	function approve(address to, uint256 tokenId) external;
+	function getApproved(uint256 tokenId) external view returns (address operator);
+	function setApprovalForAll(address operator, bool _approved) external;
+	function isApprovedForAll(address owner, address operator) external view returns (bool);
+	function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
+}
+```
+
+### ERC165 接口 (可选)
+
+ERC165 标准接口定义了一系列函数，用于实现智能合约的接口检测功能。ERC165 标准接口的定义如下：
+
+```solidity
+interface IERC165 {
+	function supportsInterface(bytes4 interfaceId) external view returns (bool);
+}
+```
+例如是否支持ERC721TokenReceiver接口 -- 当合约接收到ERC721代币时，会调用该接口。
+
+```solidity
+interface ERC721TokenReceiver {
+	function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external returns (bytes4);
+}
+```
+
+### ERC721Metadata 接口 (可选)
+
+ERC721Metadata 标准接口定义了一系列函数，用于实现非同质化代币的元数据功能。ERC721Metadata 标准接口的定义如下：
+
+```solidity
+interface IERC721Metadata {
+	function name() external view returns (string memory);
+	function symbol() external view returns (string memory);
+	function tokenURI(uint256 tokenId) external view returns (string memory);
+}
+```
+
+### ERC721Enumerable 接口 (可选)
+
+ERC721Enumerable 标准接口定义了一系列函数，用于实现非同质化代币的枚举功能。ERC721Enumerable 标准接口的定义如下：
+
+```solidity
+interface IERC721Enumerable {
+	function totalSupply() external view returns (uint256);
+	function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);
+	function tokenByIndex(uint256 index) external view returns (uint256);
+}
+```
