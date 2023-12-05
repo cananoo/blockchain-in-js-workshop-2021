@@ -557,3 +557,44 @@ interface IERC721Enumerable {
 	function tokenByIndex(uint256 index) external view returns (uint256);
 }
 ```
+
+### ERC 1155
+
+ERC1155 是以太坊上最常见的多重代币标准之一，它定义了一系列标准接口，用于实现多重代币的基本功能，例如转账、查询余额等。ERC1155 代币可以在以太坊上进行交易，也可以用于支付燃气费用。
+
+功能：①可以在一个合约中实现多种代币；
+    ②可以在一个合约中实现多种代币的转账功能；
+	③可以在一个合约中实现多种代币的批量转账功能；
+
+作用：①减少燃料费用；
+      ②降低交易数量；
+	  ③减少合约数量；
+	  ④减少合约占用的存储空间。
+
+### ERC1155 接口
+
+ERC1155 标准接口定义了一系列函数，用于实现多重代币的基本功能，例如转账、查询余额等。ERC1155 标准接口的定义如下：
+
+```solidity
+interface IERC1155 {
+	event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+	event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
+	event ApprovalForAll(address indexed account, address indexed operator, bool approved);
+	event URI(string value, uint256 indexed id);
+	function balanceOf(address account, uint256 id) external view returns (uint256);
+	function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids) external view returns (uint256[] memory);
+	function setApprovalForAll(address operator, bool approved) external;
+	function isApprovedForAll(address account, address operator) external view returns (bool);
+	// id 为代币的ID，value 为代币的数量，data 为代币的元数据
+	function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) external;
+	function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;
+}
+```
+
+## 图床简介
+
+### 什么是图床
+
+图床是一种用于存储图片的服务，可以将图片上传到图床，然后通过链接来访问图片。图床可以帮助开发者更轻松地存储和管理图片，从而提高开发效率。
+建议使用去中心化的图床，例如 IPFS、Arweave 等。
+
