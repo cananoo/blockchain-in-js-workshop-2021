@@ -598,3 +598,104 @@ interface IERC1155 {
 图床是一种用于存储图片的服务，可以将图片上传到图床，然后通过链接来访问图片。图床可以帮助开发者更轻松地存储和管理图片，从而提高开发效率。
 建议使用去中心化的图床，例如 IPFS、Arweave 等。
 
+## Express.js
+
+### Express.js 简介
+
+Express.js 是一个基于 Node.js 平台的 Web 开发框架，它提供了一系列功能强大的 API，可以帮助开发者更轻松地构建 Web 应用程序。Express.js 提供了一系列中间件，可以帮助开发者更轻松地实现路由、请求处理、错误处理等功能。
+
+### Express.js 安装
+
+```shell
+npm install express
+```
+
+### Express.js 使用
+
+```js
+const express = require("express");
+const app = express();
+const port = 3000;
+
+app.get("/", (req, res) => {
+	res.send("Hello World!");
+});
+
+app.listen(port, () => {
+	console.log(`Example app listening at http://localhost:${port}`);
+});
+```
+
+### Express.js 中间件
+
+Express.js 中间件是一个函数，用于处理 HTTP 请求。它可以访问 HTTP 请求对象（req）、HTTP 响应对象（res）和下一个中间件函数（next），并且可以修改 HTTP 请求对象（req）和 HTTP 响应对象（res）。Express.js 中间件的定义如下：
+
+```js
+const middleware = (req, res, next) => {
+	// ...
+	next();
+};
+```
+使用中间件：
+
+```js
+app.use(middleware);
+```
+内置中间件：
+
+```js
+// 作用：用于解析 HTTP 请求体
+app.use(express.json());
+```
+
+### Express.js 模板引擎
+
+Express.js 模板引擎是一个函数，用于将模板转换为 HTML 字符串。这里使用 Pug 模板引擎，它提供了一系列功能强大的 API，可以帮助开发者更轻松地实现模板功能。Express.js 模板引擎的定义如下：
+
+安装
+
+```shell
+npm install pug
+```
+
+使用
+
+```js
+app.set("view engine", "pug");
+app.set("views", "./views");
+```
+
+在views目录下创建home.pug文件：
+```js
+html
+	head
+		title= title
+	body
+		h1= message
+```
+
+在app.js中使用：
+
+```js
+app.get("/", (req, res) => {
+	res.render("home", { title: "Home", message: "Hello World!" });
+});
+```
+
+### nodemon
+
+nodemon 是一个基于 Node.js 平台的开发工具，它可以帮助开发者更轻松地开发 Node.js 应用程序。nodemon 提供了一系列功能强大的 API，可以帮助开发者更轻松地实现自动重启、自动编译等功能。
+
+安装
+
+```shell
+npm install nodemon
+```
+
+使用
+
+```shell
+nodemon app.js
+```
+## IPFS
+
