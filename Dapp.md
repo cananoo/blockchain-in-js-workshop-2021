@@ -699,3 +699,44 @@ nodemon app.js
 ```
 ## IPFS
 
+### IPFS 简介
+
+IPFS 是一个去中心化的分布式文件系统，它提供了一系列功能强大的 API，可以帮助开发者更轻松地存储和管理文件。IPFS 提供了一系列工具，可以帮助开发者更轻松地实现文件上传、文件下载等功能。
+
+### IPFS 安装 (Linux)
+
+```shell
+wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_0.24.0_linux_amd64.tar.gz
+tar -xvzf kubo_0.24.0_linux_amd64.tar.gz
+cd kubo
+sudo bash install.sh
+
+ipfs version
+```
+
+### IPFS 使用
+
+上传文件 -- 会返回一个hash值
+
+```shell
+ipfs add <file>
+```
+
+下载文件
+
+```shell
+ipfs get <hash>
+```
+查找文件
+
+```shell
+ipfs cat <hash>
+```
+
+启动 IPFS
+
+```shell
+ipfs daemon
+
+curl http://localhost:8080/ipfs/<hash>
+```
