@@ -740,3 +740,133 @@ ipfs daemon
 
 curl http://localhost:8080/ipfs/<hash>
 ```
+
+
+## React 基础
+
+### React 简介
+
+React 是一个基于 JavaScript 的前端开发框架，它提供了一系列功能强大的 API，可以帮助开发者更轻松地构建 Web 应用程序。React 提供了一系列组件，可以帮助开发者更轻松地实现组件化开发、状态管理等功能。
+
+### React 初始化
+
+```shell
+npx create-react-app my-app
+cd my-app
+code .
+npm run start
+```
+
+### React 组件
+
+React 组件是一个函数，用于将组件转换为 HTML 字符串。React 组件的定义如下：
+
+```js
+function Welcome(props) {
+	// 像这样定义的组件称为函数组件，retrun后面的内容就是组件的内容，称为JSX语法
+	return <h1>Hello, {props.name}</h1>;
+}
+```
+
+### React 组件使用
+
+```js
+function Welcome(){
+	return <h1>Hello, World!</h1>;
+}
+
+function App() {
+	// 使用组件
+	return (
+		<div>
+			<Welcome /> 
+			<Welcome /> 
+			<Welcome />  
+		</div>
+	);
+}
+
+```
+
+### React 状态
+
+React 状态是一个变量，用于存储组件的状态。
+
+#### 使用
+
+先引入useState
+
+```js
+import React, { useState } from "react";
+```
+
+定义组件如下 ： 定义一个count变量，setCount是用来修改count的函数
+
+
+```js
+function App() {
+	const [count, setCount] = useState(0);
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button onClick={() => setCount(count + 1)}>Click me</button>
+		</div>
+	);
+}
+```
+### React 属性
+
+React 属性是一个变量，用于存储组件的属性。
+
+#### 使用
+
+```js
+function Welcome({name}) {
+	return <h1>Hello, {name}</h1>;
+}
+
+function App() {
+	return (
+		<div>
+			<Welcome name="World" />
+		</div>
+	);
+}
+```
+#### use effect
+
+useEffect 是一个函数，用于处理副作用。它可以访问 React 状态（state）和 React 属性（props），并且可以修改 React 状态（state）。useEffect 的定义如下：
+
+导入
+
+```js
+import React, { useState, useEffect } from "react";
+```
+
+使用
+
+```js
+function App() {
+	const [count, setCount] = useState(0);
+	useEffect(() => {
+		document.title = `You clicked ${count} times`;
+	});
+
+	/*
+	如果只需要监听count变化，可以这样写
+	
+	useEffect(() => {
+		document.title = `You clicked ${count} times`;
+	}, [count]);
+  */
+
+	return (
+		<div>
+			<p>You clicked {count} times</p>
+			<button onClick={() => setCount(count + 1)}>Click me</button>
+		</div>
+	);
+}
+```
+
+
